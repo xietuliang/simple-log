@@ -159,20 +159,26 @@ public:
     //接收不同类型的“<<”符重载
     template<typename T>
     Log& operator << (T&& param) {
-        std::string str_data;
+        std::string str_data("");
+        std::string str_tmp;
         std::stringstream stream;
         stream << param;
-        stream >> str_data;
+		while (stream >> str_tmp) {
+			str_data += str_tmp + " ";
+		}
         write(currentLevel_, str_data);
         return *Instance();
     }
 
     template<typename T>
     Log& operator << (T& param) {
-        std::string str_data;
+		std::string str_data("");
+        std::string str_tmp;
         std::stringstream stream;
         stream << param;
-        stream >> str_data;
+        while (stream >> str_tmp) {
+            str_data += str_tmp + " ";
+        }
         write(currentLevel_, str_data);
         return *Instance();
     }
